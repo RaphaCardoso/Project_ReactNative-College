@@ -1,0 +1,58 @@
+{
+    "cursos": [
+        {
+            "id": "1",
+            "materia": "JavaScrpt",
+            "descricao": "Curso na área de TI focado em desenvolvimento web com javaScript",
+            "duracao": "40h",
+            "prof": "",
+            "dias": "",
+            "sala": ""
+        },
+        {
+            "id": "2",
+            "materia": "Java",
+            "descricao": "Curso na área de TI focado em desenvolvimento desktop com java",
+            "duracao": "40h",
+            "prof": "",
+            "dias": "",
+            "sala": ""
+        },
+        {
+            "id": "3",
+            "materia": "Flutter",
+            "descricao": "Curso na área de TI focado em desenvolvimento mobile com Flutter",
+            "duracao": "40h",
+            "prof": "",
+            "dias": "",
+            "sala": ""
+        },
+        {
+            "id": "4",
+            "materia": "React Native",
+            "descricao": "Curso na área de TI focado em desenvolvimento mobile com React Native",
+            "duracao": "40h",
+            "prof": "",
+            "dias": "",
+            "sala": ""
+        },
+        {
+            "id": "5",
+            "materia": "MySql",
+            "descricao": "Curso na área de TI focado em criação e gerenciamento de banco de dados MySql",
+            "duracao": "40h",
+            "prof": "",
+            "dias": "",
+            "sala": ""
+        },
+        {
+            "id": "6",
+            "materia": "Node.js",
+            "descricao": "Curso na área de TI focado em desenvolvimento de API com nodeJs",
+            "duracao": "40h",
+            "prof": "",
+            "dias": "",
+            "sala": ""
+        }
+    ]
+}
