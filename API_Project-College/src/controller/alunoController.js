@@ -27,7 +27,7 @@ const alunoController = {
             }
 
             return res.status(200).json({
-                msg: 'aluno atualizado com sucesso', aluno
+                msg: 'aluno atualizado com sucesso',
             });
 
         } catch (error) {

@@ -27,7 +27,7 @@ const profController = {
             }
 
             return res.status(200).json({
-                msg: 'prof atualizado com sucesso', prof
+                msg: 'prof atualizado com sucesso', 
             });
 
         } catch (error) {
