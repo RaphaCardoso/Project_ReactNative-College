@@ -6,10 +6,12 @@ import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 const EntryScreen = ({ navigation }) => {
   const handleStundentLogin = () => {
     console.log("Logando como estudante");
+    navigation.navigate("Aluno");
   };
 
   const handleTeacherLogin = () => {
     console.log("Logando como professor");
+    navigation.navigate("Professor")
   };
 
   return (
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#121212",
     justifyContent: "center",
     alignItems: "center",
-    padding: 16,
+    padding: 10,
   },
   image: {
     width: 150,
@@ -54,6 +56,8 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginBottom: 8,
   },
+
+ 
   descriptionText: {
     fontSize: 18,
     color: "#aaa",
