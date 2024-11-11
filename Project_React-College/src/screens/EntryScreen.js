@@ -16,21 +16,21 @@ const EntryScreen = ({ navigation }) => {
     <View style={styles.container}>
       <Image source={require("../assets/garoto_tela_incial.png")} />
 
-      <Text style={styles.greetingText}>Olá :)</Text>
+      <Text style={styles.greetingText}>Olá</Text>
       <Text style={styles.descriptionText}>Fazer Login como:</Text>
 
       <TouchableOpacity
         style={styles.studentButton}
-        onPress={handleStudentLogin}
+        onPress={handleStundentLogin}
       >
-        <Text style={styles.buttonText}>Student</Text>
+        <Text style={styles.buttonText}>Estudante</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.teacherButton}
         onPress={handleTeacherLogin}
       >
-        <Text style={styles.buttonText}>Teacher</Text>
+        <Text style={styles.buttonText}>Professor</Text>
       </TouchableOpacity>
     </View>
   );
