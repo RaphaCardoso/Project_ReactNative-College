@@ -1,11 +1,42 @@
 const Aluno = require("../models/Aluno");
 
+const bcrypt = require('bcrypt');
+
+const jwt = require('jsonwebtoken');
+
 const alunoService = {
 
     create: async (aluno) => {
         try {
-            return await Aluno.create(aluno)
+
+            const existeAluno = await Aluno.findOne(
+                { ra: aluno.ra }
+            )
+
+            if (existeAluno) {
+                return {
+                    error: true,
+                    msg: "RA já existente"
+                }
+            }
+
+            const hashSenha = await bcrypt.hash(aluno.senha, 10)
+
+            const data = {
+                nome: aluno.nome,
+                ra: aluno.ra,
+                senha: hashSenha
+            }
+
+            console.log(data);
+
+
+            return await Aluno.create(data)
+
         } catch (error) {
+
+            console.error(error);
+
             throw new Error('Ocorreu um erro ao criar aluno');
         }
     },
@@ -63,6 +94,37 @@ const alunoService = {
 
         } catch (error) {
             throw new Error('Ocorreu um erro ao deletar o aluno')
+        }
+    },
+
+    login: async (ra, senha) => {
+        try {
+
+            const aluno = await Aluno.findOne(
+                { ra: ra }
+            )
+
+            if (!aluno) {
+                return null
+            }
+
+            const isValid = await bcrypt.compare(senha, aluno.senha);
+
+            if (!isValid) {
+                return null
+            }
+
+            const token = jwt.sign({
+                ra: aluno.ra,
+                id: aluno.id
+            }, process.env.SECRETE, { expiresIn: '1h' })
+
+            return token
+
+        } catch (error) {
+            console.error(error);
+            throw new Error("Erro, contate o suporte!!!");
+
         }
     }
 

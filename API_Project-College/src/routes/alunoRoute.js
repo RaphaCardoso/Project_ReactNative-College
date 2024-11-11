@@ -15,4 +15,6 @@ router.put('/:id', alunoController.update);
 
 router.delete('/:id', alunoController.delete);
 
+router.post('/login', alunoController.login);
+
 module.exports = router;

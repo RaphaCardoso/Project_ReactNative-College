@@ -3,7 +3,14 @@ const alunoService = require("../services/alunoService")
 const alunoController = {
     create: async (req, res) => {
         try {
+
             const aluno = await alunoService.create(req.body);
+
+            if (aluno.error) {
+                return res.status(401).json({
+                    msg: aluno.msg
+                })
+            }
             return res.status(201).json({
                 msg: 'Usuário criado com sucesso',
                 aluno
@@ -100,6 +107,34 @@ const alunoController = {
             return res.status(500).json({
                 msg: "Erro ao listar o aluno"
             })
+        }
+    },
+
+    login: async (req, res) => {
+        try {
+            const { ra, senha } = req.body;
+
+            const login = await alunoService.login(ra, senha);
+
+            if (!login) {
+                return res.status(400).json({
+                    msg: "RA ou senha inválidos!"
+                })
+            }
+
+            return res.status(200).json({
+                msg: "Login feito com sucesso!",
+                login
+            })
+
+        } catch (error) {
+
+            console.error(error);
+
+            return res.status(400).json({
+                msg: "Erro, contato o suporte!"
+            })
+
         }
     }
 
