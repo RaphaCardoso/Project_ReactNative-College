@@ -30,9 +30,9 @@ export default function ProfessorPage() {
 
         <View style={styles.courseSection}>
           <Text style={styles.courseTitle}>DISCIPLINAS</Text>
-          <CourseItem name="Anderson Bosing" title="Programação Orientada a Objetos" />
-          <CourseItem name="Juliane Frabel" title="Banco de Dados" />
-          <CourseItem name="Paulo Santos" title="Equações Diferenciais e Métodos Numéricos" />
+          <CourseItem name="Sem Professor" title="Lógica de Programação " />
+          <CourseItem name="Sem Professor" title="Banco de Dados" />
+          <CourseItem name="Sem Professor" title="Equações Diferenciais e Métodos Numéricos" />
         </View>
       </ScrollView>
 
