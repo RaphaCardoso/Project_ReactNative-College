@@ -1,17 +1,15 @@
-// Tela de Entrada
-
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
 
 const EntryScreen = ({ navigation }) => {
   const handleStundentLogin = () => {
     console.log("Logando como estudante");
-    navigation.navigate("Aluno");
+    navigation.navigate("LoginAluno");
   };
 
   const handleTeacherLogin = () => {
     console.log("Logando como professor");
-    navigation.navigate("Professor")
+    navigation.navigate("LoginProfessor");
   };
 
   return (
@@ -46,18 +44,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     padding: 10,
   },
-  image: {
-    width: 150,
-    height: 150,
-    marginBottom: 20,
-  },
   greetingText: {
     fontSize: 24,
     color: "#fff",
     marginBottom: 8,
   },
-
- 
   descriptionText: {
     fontSize: 18,
     color: "#aaa",

@@ -3,10 +3,13 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import EntryScreen from './src/screens/EntryScreen';
+import LoginAluno from './src/screens/LoginAluno';
+import LoginProfessor from './src/screens/LoginProfessor';
 import AlunoPage from './src/screens/AlunoPage';
 import ProfessorPage from './src/screens/ProfessorPage';
 
 const Stack = createStackNavigator();
+
 const AppNavigator = () => {
   return (
     <NavigationContainer>
@@ -17,19 +20,28 @@ const AppNavigator = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Aluno"
-          component={AlunoPage}
-          options={{ headerShown: false }}
+          name="LoginAluno"
+          component={LoginAluno}
+          options={{ headerShown: false}}
         />
-         <Stack.Screen
-          name="Professor"
+        <Stack.Screen
+          name="LoginProfessor"
+          component={LoginProfessor}
+          options={{ headerShown: false}}
+        />
+        <Stack.Screen
+          name="AlunoPage"
+          component={AlunoPage}
+          options={{ headerShown: false}}
+        />
+        <Stack.Screen
+          name="ProfessorPage"
           component={ProfessorPage}
-          options={{ headerShown: false }}
+          options={{ headerShown: false}}
         />
       </Stack.Navigator>
     </NavigationContainer>
   );
 };
-
 
 export default AppNavigator;
