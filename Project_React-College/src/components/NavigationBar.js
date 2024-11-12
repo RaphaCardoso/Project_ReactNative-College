@@ -1,23 +1,40 @@
 import React from 'react';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function NavigationBar({ onNavigate }) {
+export default function NavigationBar({ onNavigate, activeRoute }) {
   return (
     <View style={styles.navigationBar}>
       <TouchableOpacity onPress={() => onNavigate('Home')}>
-        <Text style={styles.navItem}>🏠 Home</Text>
+        <Icon 
+          name="home" 
+          size={20} 
+          color={activeRoute === 'Home' ? '#E53935' : '#FFFFFF'} 
+        />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => onNavigate('Livro')}>
-        <Text style={styles.navItem}>📚 Livro</Text>
+        <Icon 
+          name="book" 
+          size={20} 
+          color={activeRoute === 'Livro' ? '#E53935' : '#FFFFFF'} 
+        />
       </TouchableOpacity>
       <TouchableOpacity style={styles.addButton} onPress={() => onNavigate('Add')}>
-        <Text style={styles.addButtonText}>+</Text>
+        <Icon name="add" size={20} color="#FFFFFF" />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => onNavigate('Calendario')}>
-        <Text style={styles.navItem}>🔍 Calendário</Text>
+        <Icon 
+          name="event" 
+          size={20} 
+          color={activeRoute === 'Calendario' ? '#E53935' : '#FFFFFF'} 
+        />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => onNavigate('Menu')}>
-        <Text style={styles.navItem}>📖 Menu</Text>
+        <Icon 
+          name="menu-book" 
+          size={20} 
+          color={activeRoute === 'Menu' ? '#E53935' : '#FFFFFF'} 
+        />
       </TouchableOpacity>
     </View>
   );
@@ -38,9 +55,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 20,
     height: 70,
   },
-  navItem: {
-    color: '#FFFFFF',
-  },
   addButton: {
     backgroundColor: '#FF5252',
     width: 50,
@@ -48,10 +62,5 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  addButtonText: {
-    color: '#FFFFFF',
-    fontSize: 24,
-    fontWeight: 'bold',
   },
 });
