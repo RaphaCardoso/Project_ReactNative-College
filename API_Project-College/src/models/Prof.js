@@ -15,6 +15,8 @@ const profSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+
+        // materias
     },
     { timestamps: true }
 );

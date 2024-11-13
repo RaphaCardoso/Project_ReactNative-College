@@ -4,6 +4,13 @@ const profController = {
     create: async (req, res) => {
         try {
             const prof = await profService.create(req.body);
+
+            if (prof.error) {
+                return res.status(401).json({
+                    msg: prof.msg
+                })
+            }
+
             return res.status(201).json({
                 msg: 'Usuário criado com sucesso',
                 prof
@@ -100,6 +107,34 @@ const profController = {
             return res.status(500).json({
                 msg: "Erro ao listar o prof"
             })
+        }
+    },
+
+    login: async (req, res) => {
+        try {
+            const { matricula, senha } = req.body;
+
+            const login = await profService.login(matricula, senha);
+
+            if (!login) {
+                return res.status(400).json({
+                    msg: "Matrícula ou senha inválidos!"
+                })
+            }
+
+            return res.status(200).json({
+                msg: "Login feito com sucesso!",
+                login
+            })
+
+        } catch (error) {
+
+            console.error(error);
+
+            return res.status(400).json({
+                msg: "Erro, contato o suporte!"
+            })
+
         }
     }
 

@@ -13,7 +13,7 @@ router.get('/', alunoController.getAll);
 
 router.put('/:id', alunoController.update);
 
-router.delete('/:id', alunoController.delete);
+router.delete('/admin/:id', alunoController.delete);
 
 router.post('/login', alunoController.login);
 

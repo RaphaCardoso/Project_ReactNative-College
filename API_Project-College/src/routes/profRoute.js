@@ -9,10 +9,12 @@ router.post('/', profController.create);
 
 router.get('/:id', profController.getOne);
 
-router.get('/', profController.getAll);
+router.get('/admin/', profController.getAll);
 
 router.put('/:id', profController.update);
 
-router.delete('/:id', profController.delete);
+router.delete('/admin/:id', profController.delete);
+
+router.post('/login', profController.login);
 
 module.exports = router;

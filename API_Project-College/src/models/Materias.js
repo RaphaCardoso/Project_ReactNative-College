@@ -11,19 +11,19 @@ const materiaSchema = new mongoose.Schema({
     },
     duracao: {
         type: String,
-        required: true,
+
     },
-    prof: {
+    profID: {
         type: String,
-        required: true,
+
     },
     dias: {
         type: String,
-        required: true,
+
     },
     sala: {
         type: String,
-        required: true,
+
     },
 },
     { timestamps: true }

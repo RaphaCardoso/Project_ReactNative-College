@@ -15,6 +15,8 @@ const alunoSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+
+        // Cursos:
     },
     { timestamps: true}
 );
