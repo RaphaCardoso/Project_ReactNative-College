@@ -1,3 +1,4 @@
+const Prof = require("../models/Prof");
 const profService = require("../services/profService")
 
 const profController = {
@@ -29,12 +30,13 @@ const profController = {
 
             if (!prof) {
                 return res.status(400).json({
-                    msg: 'prof não encontrado'
+                    msg: 'prof não encontrado',
                 })
             }
 
             return res.status(200).json({
-                msg: 'prof atualizado com sucesso', 
+                msg: 'prof atualizado com sucesso',
+                prof
             });
 
         } catch (error) {
@@ -115,6 +117,9 @@ const profController = {
             const { matricula, senha } = req.body;
 
             const login = await profService.login(matricula, senha);
+
+            console.log(login);
+
 
             if (!login) {
                 return res.status(400).json({

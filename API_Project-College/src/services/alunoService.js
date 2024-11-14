@@ -46,8 +46,18 @@ const alunoService = {
 
             const valid = await Aluno.findById(id)
 
+            const hashSenha = await bcrypt.hash(alunoToUpdate.senha, 10)
+
+            const data = {
+                nome: alunoToUpdate.nome,
+                senha: hashSenha
+            }
+
+            console.log(data);
+
+
             if (valid) {
-                return await Aluno.findByIdAndUpdate(id, alunoToUpdate)
+                return await Aluno.findByIdAndUpdate(id, data)
             }
 
             return null;
@@ -104,11 +114,16 @@ const alunoService = {
                 { ra: ra }
             )
 
+            console.log(aluno);
+
+
             if (!aluno) {
                 return null
             }
 
             const isValid = await bcrypt.compare(senha, aluno.senha);
+
+            console.log(isValid);
 
             if (!isValid) {
                 return null

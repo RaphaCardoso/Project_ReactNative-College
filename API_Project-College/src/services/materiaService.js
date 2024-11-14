@@ -1,5 +1,7 @@
 const Materia = require('../models/Materias');
 
+const profService = require("../services/profService");
+
 const materiaService = {
 
     create: async (materia) => {
@@ -13,7 +15,22 @@ const materiaService = {
     update: async (id, materiaToUpdate) => {
         try {
 
-            const valid = await Materia.findById(id)
+            console.log(materiaToUpdate);
+
+
+            const valid = await Materia.findById(id);
+
+            const existeProf = await profService.getById(materiaToUpdate.profID);
+
+            console.log(existeProf);
+
+
+            if (!existeProf) {
+                return {
+                    error: true,
+                    msg: "Matrícula de Professor inválida"
+                }
+            }
 
             if (valid) {
                 return await Materia.findByIdAndUpdate(id, materiaToUpdate)

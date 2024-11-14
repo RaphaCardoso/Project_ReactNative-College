@@ -45,6 +45,20 @@ const profService = {
 
             const valid = await Prof.findById(id)
 
+            const hashSenha = await bcrypt.hash(profToUpdate.senha, 10)
+
+            const data = {
+                nome: profToUpdate.nome,
+                senha: hashSenha
+            }
+
+            console.log(data);
+
+
+            if (valid) {
+                return await Prof.findByIdAndUpdate(id, data)
+            }
+
             if (valid) {
                 return await Prof.findByIdAndUpdate(id, profToUpdate)
             }
@@ -74,8 +88,13 @@ const profService = {
 
     getAll: async () => {
         try {
+
             return await Prof.find();
+
         } catch (error) {
+
+            console.error(error);
+
             throw new Error('Ocorreu um erro.')
         }
     },
@@ -103,11 +122,20 @@ const profService = {
                 { matricula: matricula }
             )
 
+            console.log(prof);
+
+
             if (!prof) {
                 return null
             }
 
+            console.log(prof.senha);
+
+
             const isValid = await bcrypt.compare(senha, prof.senha);
+
+            console.log(isValid);
+
 
             if (!isValid) {
                 return null
