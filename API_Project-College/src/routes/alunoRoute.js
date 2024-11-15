@@ -1,6 +1,5 @@
 const { Router } = require('express');
 
-
 const alunoController = require('../controller/alunoController');
 
 const router = Router();

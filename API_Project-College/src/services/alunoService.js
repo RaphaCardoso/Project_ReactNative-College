@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 
 const jwt = require('jsonwebtoken');
 
+const validar = require('../middlewares/verifications')
+
 const alunoService = {
 
     create: async (aluno) => {

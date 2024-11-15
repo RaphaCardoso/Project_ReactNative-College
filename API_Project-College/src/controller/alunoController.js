@@ -1,10 +1,39 @@
 const alunoService = require("../services/alunoService")
 
+const validar = require("../middlewares/verifications");
+
+const idRegistro = require('../services/createIdRegistro')
+
 const alunoController = {
     create: async (req, res) => {
         try {
 
-            const aluno = await alunoService.create(req.body);
+            const resgistro = await idRegistro();
+
+            const user = req.body;
+
+            console.log(resgistro);
+
+
+            const verificarUser = {
+
+                nome: user.nome,
+                ra: resgistro,
+                senha: user.senha
+            }
+
+            console.log(verificarUser.ra);
+
+
+            const isValid = await validar.validateUser(verificarUser);
+
+            if (!isValid) {
+                return res.status(500).json({
+                    msg: 'Campos inválidos!'
+                })
+            }
+
+            const aluno = await alunoService.create(verificarUser);
 
             if (aluno.error) {
                 return res.status(401).json({
@@ -15,9 +44,10 @@ const alunoController = {
                 msg: 'Usuário criado com sucesso',
                 aluno
             })
+
         } catch (error) {
             return res.status(500).json({
-                msg: 'Erro ao tentar criar o usuário'
+                msg: 'Erro ao tentar criar o usuário, campos inválidos!'
             })
         }
     },

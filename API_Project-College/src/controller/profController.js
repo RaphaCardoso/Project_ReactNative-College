@@ -1,9 +1,21 @@
 const Prof = require("../models/Prof");
 const profService = require("../services/profService")
+const validar = require("../middlewares/verifications");
 
 const profController = {
     create: async (req, res) => {
         try {
+
+            const verificarUser = req.body;
+
+            const isValid = await validar.validateUser(verificarUser);
+
+            if (!isValid) {
+                return res.status(500).json({
+                    msg: 'Campos inválidos!'
+                })
+            }
+
             const prof = await profService.create(req.body);
 
             if (prof.error) {
