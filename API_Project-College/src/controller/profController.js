@@ -1,12 +1,27 @@
 const Prof = require("../models/Prof");
-const profService = require("../services/profService")
+const profService = require("../services/profService");
 const validar = require("../middlewares/verifications");
+const idRegistro = require('../services/createIdRegistro')
 
 const profController = {
     create: async (req, res) => {
         try {
 
-            const verificarUser = req.body;
+            const resgistro = await idRegistro();
+
+            const user = req.body;
+
+            console.log(resgistro);
+
+            const verificarUser = {
+
+                nome: user.nome,
+                matricula: resgistro,
+                senha: user.senha
+            }
+
+            console.log(verificarUser.matricula);
+
 
             const isValid = await validar.validateUser(verificarUser);
 
@@ -16,7 +31,7 @@ const profController = {
                 })
             }
 
-            const prof = await profService.create(req.body);
+            const prof = await profService.create(verificarUser);
 
             if (prof.error) {
                 return res.status(401).json({

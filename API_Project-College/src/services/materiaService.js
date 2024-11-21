@@ -81,7 +81,33 @@ const materiaService = {
         } catch (error) {
             throw new Error('Ocorreu um erro ao deletar o materia')
         }
-    }
+    },
+
+    getAllCursos: async (id) => {
+        try {
+
+            const cursos = await materiaService.getAll();
+
+            // filtrando todos os alunos desse curso
+            const cursosFiltrados = cursos.filter(curso => curso.profID === id)
+
+            let materias = [];
+
+            for (i = 0; i < cursosFiltrados.length; i++) {
+
+                const ids = cursosFiltrados[i]
+
+                const materia = await Materia.findById(ids)
+
+                materias.push(materia);
+            }
+
+            return materias;
+
+        } catch (error) {
+            throw new Error('Ocorreu um erro.')
+        }
+    },
 
 };
 

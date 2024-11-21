@@ -12,6 +12,8 @@ router.get('/', cursoController.getAll);
 // // pegar todas as matriculas de um curso
 router.get('/:id', cursoController.getAllWhere);
 
+router.get('/aluno/:id', cursoController.getAllCursos);
+
 // rota para deletar matricula do curso
 router.delete('/:id', cursoController.delete);
 

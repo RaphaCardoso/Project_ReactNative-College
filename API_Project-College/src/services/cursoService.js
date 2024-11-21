@@ -6,6 +6,9 @@ const Materia = require("../models/Materias")
 
 const materiaService = require("../services/materiaService");
 
+const alunoService = require("../services/alunoService");
+
+
 const cursoService = {
 
     create: async (matricula) => {
@@ -20,20 +23,37 @@ const cursoService = {
                 }
             }
 
-            const isValidAluno = await Aluno.findOne(
-                { alunoId: matricula.alunoId }
-            )
 
-            if (isValidAluno) {
+            const isValidAluno = await alunoService.getById(matricula.alunoId)
+
+            if (!isValidAluno) {
                 return {
                     error: true,
                     msg: "Aluno inexistente!"
                 }
             }
 
+            const matriculas = await cursoService.getAll();
+
+            const alunoMatriculado = matriculas.filter(cursos => cursos.alunoId === matricula.alunoId);
+
+            const validation = alunoMatriculado.find(ver => ver.materiaId === matricula.materiaId);
+
+            if (validation) {
+
+                return {
+                    error: true,
+                    msg: "Aluno com matrícula ativa!",
+                    validation
+                }
+
+            }
+
             return await Curso.create(matricula);
 
         } catch (error) {
+            console.error(error);
+
             throw new Error('Ocorreu um erro ao se matricular')
         }
     },
@@ -80,6 +100,22 @@ const cursoService = {
         }
     },
 
+    getById: async (id) => {
+        try {
+
+            const matricula = await Curso.findById(id)
+
+            if (!matricula) {
+                return null;
+            }
+
+            return matricula;
+
+        } catch (error) {
+            throw new Error('Ocorreu um erro.') // throw jogar pra cima, de acordo com a camada
+        }
+    },
+
     delete: async (id) => {
         try {
             const valid = await Curso.findById(id)
@@ -93,7 +129,41 @@ const cursoService = {
         } catch (error) {
             throw new Error('Ocorreu um erro ao deletar o prof')
         }
-    }
+    },
+
+    getAllCursos: async (id) => {
+        try {
+
+            const cursos = await cursoService.getAll();
+
+            // filtrando todos os alunos desse curso
+            const cursosFiltrados = cursos.filter(curso => curso.alunoId === id)
+
+            const materiaIds = cursosFiltrados.map(curso => curso.materiaId);
+
+            let materias = [];
+
+            for (i = 0; i < materiaIds.length; i++) {
+
+                const ids = materiaIds[i]
+
+                const materia = await Materia.findById(ids)
+
+                materias.push(materia);
+            }
+            const aluno = await Aluno.findById(id);
+
+            const data = {
+                Aluno: aluno,
+                Cursos: materias
+            }
+
+            return data;
+
+        } catch (error) {
+            throw new Error('Ocorreu um erro.')
+        }
+    },
 
 
 };

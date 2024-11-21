@@ -17,8 +17,12 @@ const cursoController = {
             })
 
         } catch (error) {
+
+            console.error(error);
+
             return res.status(500).json({
                 msg: 'Erro ao tentar criar o curso'
+
             })
         }
     },
@@ -42,7 +46,7 @@ const cursoController = {
     getAllWhere: async (req, res) => {
         try {
 
-            const { id } = req.params 
+            const { id } = req.params
             const cursos = await cursoService.getAllWhere(id);
 
             return res.status(200).json({
@@ -53,6 +57,31 @@ const cursoController = {
         } catch (error) {
             return res.status(500).json({
                 msg: "Erro ao listar as matriculas"
+            })
+        }
+    },
+
+    getOne: async (req, res) => {
+        try {
+
+            const { id } = req.params;
+
+            const matricula = await cursoService.getById(id);
+
+            if (!matricula) {
+                return res.status(400).json({
+                    msg: "matricula não encontrada"
+                })
+            }
+
+            return res.status(200).json({
+                msg: "Matricula: ",
+                matricula
+            })
+
+        } catch (error) {
+            return res.status(500).json({
+                msg: "Erro ao listar o aluno"
             })
         }
     },
@@ -80,7 +109,28 @@ const cursoController = {
                 msg: "Erro ao deletar a matricula"
             })
         }
-    }
+    },
+
+
+    getAllCursos: async (req, res) => {
+        try {
+
+            const { id } = req.params
+            const cursos = await cursoService.getAllCursos(id);
+
+            return res.status(200).json({
+                msg: "Matrículas cadastrados: ",
+                cursos
+            })
+
+        } catch (error) {
+            return res.status(500).json({
+                msg: "Erro ao listar as matriculas"
+            })
+        }
+    },
+
+
 
 };
 

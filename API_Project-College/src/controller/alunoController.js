@@ -2,7 +2,7 @@ const alunoService = require("../services/alunoService")
 
 const validar = require("../middlewares/verifications");
 
-const idRegistro = require('../services/createIdRegistro')
+const idRegistro = require('../services/createIdRegistro');
 
 const alunoController = {
     create: async (req, res) => {

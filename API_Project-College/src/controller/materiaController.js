@@ -107,7 +107,25 @@ const materiaController = {
                 msg: "Erro ao listar o materia"
             })
         }
-    }
+    },
+
+    getAllCursos: async (req, res) => {
+        try {
+
+            const { id } = req.params
+            const cursos = await materiaService.getAllCursos(id);
+
+            return res.status(200).json({
+                msg: "Matrículas cadastrados: ",
+                cursos
+            })
+
+        } catch (error) {
+            return res.status(500).json({
+                msg: "Erro ao listar as matriculas"
+            })
+        }
+    },
 
 
 }

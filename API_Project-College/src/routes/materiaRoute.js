@@ -14,5 +14,6 @@ router.put('/:id', materiaController.update);
 
 router.delete('/admin/:id', materiaController.delete);
 
+router.get('/prof/:id', materiaController.getAllCursos);
 
 module.exports = router;
