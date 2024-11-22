@@ -7,12 +7,13 @@ import LoginAluno from './src/screens/LoginAluno';
 import LoginProfessor from './src/screens/LoginProfessor';
 import AlunoPage from './src/screens/AlunoPage';
 import ProfessorPage from './src/screens/ProfessorPage';
+import CalendarioScreen from './src/screens/CalendarioScreen'; 
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   return (
-    <NavigationContainer>
+    <NavigationContainer>                              
       <Stack.Navigator initialRouteName="Entry">
         <Stack.Screen
           name="Entry"
@@ -22,22 +23,27 @@ const AppNavigator = () => {
         <Stack.Screen
           name="LoginAluno"
           component={LoginAluno}
-          options={{ headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="LoginProfessor"
           component={LoginProfessor}
-          options={{ headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="AlunoPage"
           component={AlunoPage}
-          options={{ headerShown: false}}
+          options={{ headerShown: false }}
         />
         <Stack.Screen
           name="ProfessorPage"
           component={ProfessorPage}
-          options={{ headerShown: false}}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Calendario" 
+          component={CalendarioScreen}
+          options={{ headerShown: false }} 
         />
       </Stack.Navigator>
     </NavigationContainer>

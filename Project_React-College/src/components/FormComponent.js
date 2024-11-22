@@ -6,19 +6,19 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // Dados do usuário fictício
   const fakeUser = userType === "aluno" 
     ? { username: "123456789", password: "senha123" }
     : { username: "987654321", password: "senha123" };
 
   const handleSubmit = () => {
-    // Verifica se o nome de usuário e senha correspondem aos dados
+    console.log("Username:", username);  // Exibe o valor do campo username
+    console.log("Password:", password);  // Exibe o valor do campo password
     if (isSignUp) {
+      console.log("Confirm Password:", confirmPassword);  // Exibe o valor do campo confirmPassword
       if (password !== confirmPassword) {
         Alert.alert("Erro", "As senhas não coincidem!");
         return;
       }
-      // Aqui você pode adicionar a lógica de cadastro
       Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
       onSubmit();
     } else {

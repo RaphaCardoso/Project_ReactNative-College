@@ -5,9 +5,9 @@ import LibraryBanner from '../components/LibaryBanner';
 import CourseItem from '../components/CourseItem';
 import NavigationBar from '../components/NavigationBar';
 
-export default function AlunoPage() {
+export default function AlunoPage({ navigation }) {
   const handleNavigate = (screen) => {
-    console.log(`Navegar para ${screen}`);
+    navigation.navigate(screen); // Usar o método de navegação do React Navigation
   };
 
   return (
@@ -33,7 +33,7 @@ export default function AlunoPage() {
         </View>
       </ScrollView>
 
-      <NavigationBar onNavigate={handleNavigate} />
+      <NavigationBar onNavigate={handleNavigate} activeRoute="Home" />
     </View>
   );
 }
