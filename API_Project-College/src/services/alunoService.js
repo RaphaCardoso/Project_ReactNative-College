@@ -116,8 +116,9 @@ const alunoService = {
                 { ra: ra }
             )
 
-            console.log(aluno);
-
+            if (aluno) {
+                console.log("Login efetuado com sucesso");
+            }
 
             if (!aluno) {
                 return null

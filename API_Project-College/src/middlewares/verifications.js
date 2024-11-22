@@ -4,9 +4,6 @@ const validateUser = async (user) => {
 
     const idRegistro = user.ra || user.matricula;
 
-    console.log(idRegistro);
-
-
     const senha = user.senha;
 
     if (!nome || !idRegistro || !senha) {
