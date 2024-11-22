@@ -11,10 +11,10 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
     : { username: "987654321", password: "senha123" };
 
   const handleSubmit = () => {
-    console.log("Username:", username);  // Exibe o valor do campo username
-    console.log("Password:", password);  // Exibe o valor do campo password
+    console.log("Username:", username); 
+    console.log("Password:", password);  
     if (isSignUp) {
-      console.log("Confirm Password:", confirmPassword);  // Exibe o valor do campo confirmPassword
+      console.log("Confirm Password:", confirmPassword);  
       if (password !== confirmPassword) {
         Alert.alert("Erro", "As senhas não coincidem!");
         return;
@@ -32,7 +32,7 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
 
   return (
     <View>
-      <Text style={styles.title}>{isSignUp ? "Sign Up" : "Login"}</Text>
+      <Text style={styles.title}>{isSignUp ? "Login" : "Login"}</Text>
       <TextInput
         placeholder={userType === "aluno" ? "R.A" : "Matrícula"}
         style={styles.input}
@@ -58,12 +58,12 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
       )}
 
       <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-        <Text style={styles.buttonText}>{isSignUp ? "Sign Up" : "Login"}</Text>
+        <Text style={styles.buttonText}>{isSignUp ? "Login" : "Login"}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={onToggleSignUp}>
         <Text style={styles.toggleText}>
-          {isSignUp ? "Already have an account? Login" : "Don't have an account? Sign Up"}
+          {isSignUp ? "Já tem conta? Faça seu Login" : "Não tem conta? Faça seu cadastro"}
         </Text>
       </TouchableOpacity>
     </View>

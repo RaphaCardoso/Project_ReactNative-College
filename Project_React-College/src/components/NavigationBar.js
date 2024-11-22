@@ -2,14 +2,17 @@ import React from 'react';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function NavigationBar({ onNavigate, activeRoute }) {
+export default function NavigationBar({ onNavigate, activeRoute, userType }) {
+  
+  const homeRoute = userType === 'professor' ? 'ProfessorPage' : 'AlunoPage';
+
   return (
     <View style={styles.navigationBar}>
-      <TouchableOpacity onPress={() => onNavigate('Home')}>
+      <TouchableOpacity onPress={() => onNavigate(homeRoute)}>
         <Icon 
           name="home" 
           size={20} 
-          color={activeRoute === 'Home' ? '#E53935' : '#FFFFFF'} 
+          color={activeRoute === homeRoute ? '#E53935' : '#FFFFFF'} 
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => onNavigate('Livro')}>

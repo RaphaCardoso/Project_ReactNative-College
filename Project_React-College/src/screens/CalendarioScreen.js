@@ -1,136 +1,143 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from "react";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import { Calendar } from "react-native-calendars";
+import NavigationBar from '../components/NavigationBar'
 
-export default function CalendarScreen() {
+const CalendarScreen = ({ navigation }) => {
   const [selectedDate, setSelectedDate] = useState(null);
-  const month = "March 2021";
-  const daysInMonth = 31;
-  const firstDayOfMonth = 1;
 
-  const generateCalendar = () => {
-    const weeks = [];
-    let currentDay = 1;
-
-    for (let week = 0; week < 5; week++) {
-      const days = [];
-      for (let day = 0; day < 7; day++) {
-        if (week === 0 && day < firstDayOfMonth) {
-          days.push(null);
-        } else if (currentDay > daysInMonth) {
-          days.push(null);
-        } else {
-          days.push(currentDay);
-          currentDay++;
-        }
-      }
-      weeks.push(days);
-    }
-    return weeks;
+  // Eventos marcados no calendário
+  const events = {
+    "2024-11-25": [{ title: "Aula Magna", description: "Evento especial" }],
+    "2024-11-28": [{ title: "Reunião de Pais", description: "Auditório A" }],
   };
 
-  const calendarWeeks = generateCalendar();
+  const handleDayPress = (day) => {
+    setSelectedDate(day.dateString);
+  };
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerText}>CALENDÁRIO</Text>
-        <Text style={styles.monthText}>{month}</Text>
+      {/* Cabeçalho */}
+      <Text style={styles.title}>Calendário</Text>
+
+      {/* Calendário */}
+      <Calendar
+        current={new Date().toISOString().split("T")[0]} // Data atual
+        onDayPress={handleDayPress}
+        markedDates={{
+          ...Object.keys(events).reduce((acc, date) => {
+            acc[date] = { marked: true, dotColor: "#FF4757" };
+            return acc;
+          }, {}),
+          [selectedDate]: {
+            selected: true,
+            marked: true,
+            selectedColor: "#FF4757",
+          },
+        }}
+        theme={{
+          backgroundColor: "#000",
+          calendarBackground: "#000",
+          textSectionTitleColor: "#FFF",
+          selectedDayBackgroundColor: "#FF4757",
+          selectedDayTextColor: "#FFF",
+          todayTextColor: "#FF4757",
+          dayTextColor: "#FFF",
+          textDisabledColor: "#555",
+          arrowColor: "#FF4757",
+          monthTextColor: "#FFF",
+          indicatorColor: "#FF4757",
+        }}
+        monthFormat={"MMMM yyyy"} // Formato do mês
+        firstDay={1} // Começar na segunda-feira
+        enableSwipeMonths
+      />
+
+      {/* Lista de Eventos */}
+      <View style={styles.eventList}>
+        <Text style={styles.eventTitle}>
+          {selectedDate
+            ? `Eventos em ${new Date(selectedDate).toLocaleDateString("pt-BR", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}`
+            : "Selecione uma data para ver os eventos"}
+        </Text>
+        <FlatList
+          data={events[selectedDate] || []}
+          keyExtractor={(item, index) => index.toString()}
+          renderItem={({ item }) => (
+            <View style={styles.eventItem}>
+              <Text style={styles.eventName}>{item.title}</Text>
+              <Text style={styles.eventDescription}>{item.description}</Text>
+            </View>
+          )}
+          ListEmptyComponent={
+            selectedDate && (
+              <Text style={styles.noEventText}>
+                Nenhum evento registrado para esta data.
+              </Text>
+            )
+          }
+        />
       </View>
 
-      <View style={styles.weekDays}>
-        {["S", "M", "T", "W", "T", "F", "S"].map((day, index) => (
-          <Text key={index} style={styles.weekDayText}>
-            {day}
-          </Text>
-        ))}
-      </View>
-
-      <View style={styles.daysContainer}>
-        {calendarWeeks.map((week, weekIndex) => (
-          <View key={weekIndex} style={styles.weekRow}>
-            {week.map((day, dayIndex) => (
-              <TouchableOpacity
-                key={dayIndex}
-                style={[
-                  styles.day,
-                  day === selectedDate ? styles.selectedDay : null,
-                ]}
-                onPress={() => setSelectedDate(day)}
-                disabled={!day}
-              >
-                <Text
-                  style={[
-                    styles.dayText,
-                    day === selectedDate ? styles.selectedDayText : null,
-                  ]}
-                >
-                  {day || ""}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-        ))}
-      </View>
+      {/* Barra de Navegação */}
+      <NavigationBar
+        onNavigate={(route) => navigation.navigate(route)} // Navega para a rota escolhida
+        activeRoute="Calendario" // Define o botão ativo como Calendário
+      />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1C1C1E',
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+    backgroundColor: "#000",
+    padding: 16,
+    paddingBottom: 70, // Espaço para a barra de navegação
   },
-  header: {
-    alignItems: 'center',
+  title: {
+    fontSize: 24,
+    color: "#FFF",
+    textAlign: "center",
     marginBottom: 20,
   },
-  headerText: {
-    color: '#E53935',
-    fontSize: 20,
-    fontWeight: 'bold',
+  eventList: {
+    marginTop: 20,
+    padding: 10,
+    backgroundColor: "#222",
+    borderRadius: 10,
   },
-  monthText: {
-    color: '#FFFFFF',
-    fontSize: 16,
+  eventTitle: {
+    fontSize: 18,
+    color: "#FFF",
+    fontWeight: "bold",
+    marginBottom: 10,
+    textAlign: "center",
   },
-  weekDays: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  eventItem: {
     marginBottom: 10,
   },
-  weekDayText: {
-    color: '#FFFFFF',
+  eventName: {
+    fontSize: 16,
+    color: "#FF4757",
+    fontWeight: "bold",
+  },
+  eventDescription: {
     fontSize: 14,
-    textAlign: 'center',
-    width: 40,
+    color: "#FFF",
   },
-  daysContainer: {
-    flexDirection: 'column',
-  },
-  weekRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  day: {
-    width: 40,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 20,
-    margin: 2,
-    backgroundColor: '#2D2D2D',
-  },
-  dayText: {
-    color: '#FFFFFF',
+  noEventText: {
     fontSize: 14,
-  },
-  selectedDay: {
-    backgroundColor: '#E53935',
-  },
-  selectedDayText: {
-    color: '#FFFFFF',
-    fontWeight: 'bold',
+    color: "#FFF",
+    textAlign: "center",
+    marginTop: 10,
   },
 });
+
+export default CalendarScreen;

@@ -7,7 +7,7 @@ import NavigationBar from '../components/NavigationBar';
 
 export default function AlunoPage({ navigation }) {
   const handleNavigate = (screen) => {
-    navigation.navigate(screen); // Usar o método de navegação do React Navigation
+    navigation.navigate(screen); 
   };
 
   return (

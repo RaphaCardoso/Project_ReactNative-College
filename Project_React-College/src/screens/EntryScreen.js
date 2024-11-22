@@ -1,8 +1,12 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Image } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from "react-native";
+
+// Obter a largura da tela para ajustar os botões
+const { width } = Dimensions.get('window');
 
 const EntryScreen = ({ navigation }) => {
-  const handleStundentLogin = () => {
+  // Funções de navegação para o login de estudante e professor
+  const handleStudentLogin = () => {
     console.log("Logando como estudante");
     navigation.navigate("LoginAluno");
   };
@@ -14,18 +18,21 @@ const EntryScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/garoto_tela_incial.png")} />
+      {/* Imagem da tela inicial */}
+      <Image source={require("../assets/garoto_tela_incial.png")} style={styles.image} />
 
       <Text style={styles.greetingText}>Olá</Text>
       <Text style={styles.descriptionText}>Fazer Login como:</Text>
 
+      {/* Botão de login como Estudante */}
       <TouchableOpacity
         style={styles.studentButton}
-        onPress={handleStundentLogin}
+        onPress={handleStudentLogin}
       >
         <Text style={styles.buttonText}>Estudante</Text>
       </TouchableOpacity>
 
+      {/* Botão de login como Professor */}
       <TouchableOpacity
         style={styles.teacherButton}
         onPress={handleTeacherLogin}
@@ -43,6 +50,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     padding: 10,
+  },
+  image: {
+    width: width * 0.7, // Definir a largura da imagem com base na largura da tela
+    height: width * 0.7, // Definir a altura proporcional
+    resizeMode: 'contain', // Garantir que a imagem seja ajustada corretamente
+    marginBottom: 40,
   },
   greetingText: {
     fontSize: 24,
