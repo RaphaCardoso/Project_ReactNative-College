@@ -1,20 +1,17 @@
 import React, { useState } from "react";
 import { View, TextInput, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import axios from 'axios';
 
 const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const fakeUser = userType === "aluno" 
-    ? { username: "123456789", password: "senha123" }
-    : { username: "987654321", password: "senha123" };
-
   const handleSubmit = () => {
-    console.log("Username:", username); 
-    console.log("Password:", password);  
+    console.log("Username:", username);
+    console.log("Password:", password);
     if (isSignUp) {
-      console.log("Confirm Password:", confirmPassword);  
+      console.log("Confirm Password:", confirmPassword);
       if (password !== confirmPassword) {
         Alert.alert("Erro", "As senhas não coincidem!");
         return;
@@ -22,13 +19,44 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
       Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
       onSubmit();
     } else {
-      if (username === fakeUser.username && password === fakeUser.password) {
-        onSubmit();
-      } else {
-        Alert.alert("Erro", "Usuário ou senha inválidos!");
-      }
+      return;
     }
   };
+
+  const enviarCadastro = async () => {
+
+    const novoCadastro = { nome: username, senha: password };
+
+    axios.post('http://10.0.2.2:3100/aluno', novoCadastro).then(resposta => {
+      if (resposta.status === 201) {
+        setUsername = '';
+        setPassword = '';
+        setConfirmPassword = '';
+
+      } else {
+        Alert.alert('Erro. falha ao adicionar cadastro!');
+        return;
+      }
+    });
+
+  }
+
+  const enviarLogin = async () => {
+    const novoCadastro = { ra: username, senha: password };
+
+    axios.post('http://localhost:3100/aluno/login', novoCadastro).then(resposta => {
+      if (resposta.status === 201) {
+        setUsername = '';
+        setPassword = '';
+        setConfirmPassword = '';
+
+      } else {
+        Alert.alert('Erro. falha ao adicionar cadastro!');
+        return;
+      }
+    });
+  };
+
 
   return (
     <View>
@@ -57,7 +85,7 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
         />
       )}
 
-      <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+      <TouchableOpacity style={styles.button} onPress={isSignUp ? enviarCadastro : enviarLogin}>
         <Text style={styles.buttonText}>{isSignUp ? "Login" : "Login"}</Text>
       </TouchableOpacity>
 

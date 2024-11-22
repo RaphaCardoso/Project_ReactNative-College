@@ -12,7 +12,7 @@ const alunoController = {
 
             const user = req.body;
 
-            console.log(resgistro);
+            console.log(resgistro + ' ra');
 
 
             const verificarUser = {
@@ -21,9 +21,6 @@ const alunoController = {
                 ra: resgistro,
                 senha: user.senha
             }
-
-            console.log(verificarUser.ra);
-
 
             const isValid = await validar.validateUser(verificarUser);
 
