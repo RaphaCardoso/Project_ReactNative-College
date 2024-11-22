@@ -15,16 +15,19 @@ export default function NavigationBar({ onNavigate, activeRoute, userType }) {
           color={activeRoute === homeRoute ? '#E53935' : '#FFFFFF'} 
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => onNavigate('Livro')}>
+
+      <TouchableOpacity onPress={() => onNavigate('Library')}>
         <Icon 
-          name="book" 
+          name="menu-book"  
           size={20} 
-          color={activeRoute === 'Livro' ? '#E53935' : '#FFFFFF'} 
+          color={activeRoute === 'Library' ? '#E53935' : '#FFFFFF'} 
         />
       </TouchableOpacity>
+
       <TouchableOpacity style={styles.addButton} onPress={() => onNavigate('Add')}>
         <Icon name="add" size={20} color="#FFFFFF" />
       </TouchableOpacity>
+
       <TouchableOpacity onPress={() => onNavigate('Calendario')}>
         <Icon 
           name="event" 
@@ -32,13 +35,15 @@ export default function NavigationBar({ onNavigate, activeRoute, userType }) {
           color={activeRoute === 'Calendario' ? '#E53935' : '#FFFFFF'} 
         />
       </TouchableOpacity>
+
       <TouchableOpacity onPress={() => onNavigate('Menu')}>
         <Icon 
-          name="menu-book" 
+          name="menu" 
           size={20} 
           color={activeRoute === 'Menu' ? '#E53935' : '#FFFFFF'} 
         />
       </TouchableOpacity>
+
     </View>
   );
 }

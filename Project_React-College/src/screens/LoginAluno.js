@@ -18,9 +18,9 @@ const LoginAluno = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
-        <Icon name="arrow-back" size={30} color="#fff" /> 
-      </TouchableOpacity>
+    <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
+      <Icon name="arrow-back" size={30} color="#fff" />
+    </TouchableOpacity>
 
       <FormComponent
         isSignUp={isSignUp}

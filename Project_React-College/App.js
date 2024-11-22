@@ -1,19 +1,20 @@
-import 'react-native-gesture-handler';
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import EntryScreen from './src/screens/EntryScreen';
-import LoginAluno from './src/screens/LoginAluno';
-import LoginProfessor from './src/screens/LoginProfessor';
-import AlunoPage from './src/screens/AlunoPage';
-import ProfessorPage from './src/screens/ProfessorPage';
-import CalendarioScreen from './src/screens/CalendarioScreen'; 
+import "react-native-gesture-handler";
+import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import EntryScreen from "./src/screens/EntryScreen";
+import LoginAluno from "./src/screens/LoginAluno";
+import LoginProfessor from "./src/screens/LoginProfessor";
+import AlunoPage from "./src/screens/AlunoPage";
+import ProfessorPage from "./src/screens/ProfessorPage";
+import CalendarioScreen from "./src/screens/CalendarioScreen";
+import LibraryPage from "./src/screens/LibraryPage";  
 
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
   return (
-    <NavigationContainer>                              
+    <NavigationContainer>
       <Stack.Navigator initialRouteName="Entry">
         <Stack.Screen
           name="Entry"
@@ -41,8 +42,14 @@ const AppNavigator = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
-          name="Calendario" 
+          name="Calendario"
           component={CalendarioScreen}
+          options={{ headerShown: false }}
+        />
+
+        <Stack.Screen 
+          name="Library" 
+          component={LibraryPage} 
           options={{ headerShown: false }} 
         />
       </Stack.Navigator>
