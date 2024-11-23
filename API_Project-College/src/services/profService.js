@@ -122,20 +122,11 @@ const profService = {
                 { matricula: matricula }
             )
 
-            console.log(prof);
-
-
             if (!prof) {
                 return null
             }
 
-            console.log(prof.senha);
-
-
             const isValid = await bcrypt.compare(senha, prof.senha);
-
-            console.log(isValid);
-
 
             if (!isValid) {
                 return null

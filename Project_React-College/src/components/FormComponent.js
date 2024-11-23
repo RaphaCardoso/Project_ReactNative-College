@@ -7,66 +7,125 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = () => {
-    console.log("Username:", username);
-    console.log("Password:", password);
-    if (isSignUp) {
-      console.log("Confirm Password:", confirmPassword);
-      if (password !== confirmPassword) {
-        Alert.alert("Erro", "As senhas não coincidem!");
-        return;
-      }
-      Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
-      onSubmit();
-    } else {
-      return;
-    }
-  };
+  // const handleSubmit = () => {
+  //   console.log("Username:", username);
+  //   console.log("Password:", password);
+  //   if (isSignUp) {
+  //     console.log("Confirm Password:", confirmPassword);
+  //     if (password !== confirmPassword) {
+  //       Alert.alert("Erro", "As senhas não coincidem!");
+  //       return;
+  //     }
+  //     onSubmit();
+  //   } else {
+  //     return;
+  //   }
+  // };
 
   const enviarCadastro = async () => {
 
     const novoCadastro = { nome: username, senha: password };
+    try {
 
-    axios.post('http://10.0.2.2:3100/aluno', novoCadastro).then(resposta => {
-      if (resposta.status === 201) {
-        setUsername = '';
-        setPassword = '';
-        setConfirmPassword = '';
+      userType === "aluno" ? (
+        axios.post('http://10.0.2.2:3100/aluno', novoCadastro).then(resposta => {
+          if (resposta.status === 201) {
+            setUsername('');
+            setPassword('');
+            setConfirmPassword('');
 
-      } else {
-        Alert.alert('Erro. falha ao adicionar cadastro!');
-        return;
-      }
-    });
+          } else {
+            Alert.alert('Erro. falha ao adicionar cadastro!');
+            return;
+          }
+        })
+
+      ) : (
+
+        axios.post('http://10.0.2.2:3100/prof', novoCadastro).then(resposta => {
+          if (resposta.status === 201) {
+            setUsername('');
+            setPassword('');
+            setConfirmPassword('');
+
+          } else {
+            Alert.alert('Erro. falha ao adicionar cadastro!');
+            return;
+          }
+        })
+      )
+
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
+      console.error(erro);
+    }
+
 
   }
 
   const enviarLogin = async () => {
-    const novoCadastro = { ra: username, senha: password };
+    const novoCadastroA = { ra: username, senha: password };
 
-    axios.post('http://localhost:3100/aluno/login', novoCadastro).then(resposta => {
-      if (resposta.status === 201) {
-        setUsername = '';
-        setPassword = '';
-        setConfirmPassword = '';
+    const novoCadastroP = { matricula: username, senha: password };
 
-      } else {
-        Alert.alert('Erro. falha ao adicionar cadastro!');
-        return;
-      }
-    });
+    try {
+
+      userType === "aluno" ? (
+
+        axios.post('http://10.0.2.2:3100/aluno/login', novoCadastroA).then(resposta => {
+          if (resposta.status === 200) {
+            setUsername('');
+            setPassword('');
+            setConfirmPassword('');
+
+          } else {
+            Alert.alert('Erro. falha ao adicionar cadastro!');
+            return;
+          }
+        })
+
+      ) : (
+        axios.post('http://10.0.2.2:3100/prof/login', novoCadastroP).then(resposta => {
+          if (resposta.status === 200) {
+            setUsername('');
+            setPassword('');
+            setConfirmPassword('');
+
+          } else {
+            Alert.alert('Erro. falha ao adicionar cadastro!');
+            return;
+          }
+        })
+      )
+
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
+      console.error(erro);
+    }
+
   };
 
 
   return (
     <View>
-      <Text style={styles.title}>{isSignUp ? "Login" : "Login"}</Text>
-      <TextInput
-        placeholder={userType === "aluno" ? "R.A" : "Matrícula"}
-        style={styles.input}
-        value={username}
-        onChangeText={setUsername}
-      />
+      <Text style={styles.title}>{isSignUp ? "Cadastro" : "Login"}</Text>
+      {isSignUp ? (
+        <TextInput
+          placeholder="Nome"
+          style={styles.input}
+          value={username}
+          onChangeText={setUsername}
+        />
+      ) : (
+        <TextInput
+          placeholder={userType === "aluno" ? "R.A" : "Matrícula"}
+          style={styles.input}
+          value={username}
+          onChangeText={setUsername}
+        />
+      )
+      }
+
       <TextInput
         placeholder="Password"
         style={styles.input}
@@ -86,7 +145,7 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
       )}
 
       <TouchableOpacity style={styles.button} onPress={isSignUp ? enviarCadastro : enviarLogin}>
-        <Text style={styles.buttonText}>{isSignUp ? "Login" : "Login"}</Text>
+        <Text style={styles.buttonText}>{isSignUp ? "Cadastro" : "Login"}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={onToggleSignUp}>

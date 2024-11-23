@@ -145,9 +145,6 @@ const profController = {
 
             const login = await profService.login(matricula, senha);
 
-            console.log(login);
-
-
             if (!login) {
                 return res.status(400).json({
                     msg: "Matrícula ou senha inválidos!"
