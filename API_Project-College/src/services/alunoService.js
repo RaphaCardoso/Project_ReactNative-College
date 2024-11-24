@@ -109,6 +109,43 @@ const alunoService = {
         }
     },
 
+    // login: async (ra, senha) => {
+    //     try {
+
+    //         const aluno = await Aluno.findOne(
+    //             { ra: ra }
+    //         )
+
+    //         if (aluno) {
+    //             console.log("Login efetuado com sucesso");
+    //         }
+
+    //         if (!aluno) {
+    //             return null
+    //         }
+
+    //         const isValid = await bcrypt.compare(senha, aluno.senha);
+
+    //         console.log(isValid);
+
+    //         if (!isValid) {
+    //             return null
+    //         }
+
+    //         const token = jwt.sign({
+    //             ra: aluno.ra,
+    //             id: aluno.id
+    //         }, process.env.SECRETE, { expiresIn: '1h' })
+
+    //         return token
+
+    //     } catch (error) {
+    //         console.error(error);
+    //         throw new Error("Erro, contate o suporte!!!");
+
+    //     }
+    // }
+
     login: async (ra, senha) => {
         try {
 
@@ -116,17 +153,11 @@ const alunoService = {
                 { ra: ra }
             )
 
-            if (aluno) {
-                console.log("Login efetuado com sucesso");
-            }
-
             if (!aluno) {
                 return null
             }
 
             const isValid = await bcrypt.compare(senha, aluno.senha);
-
-            console.log(isValid);
 
             if (!isValid) {
                 return null
@@ -134,16 +165,27 @@ const alunoService = {
 
             const token = jwt.sign({
                 ra: aluno.ra,
-                id: aluno.id
+                id: aluno.ra
             }, process.env.SECRETE, { expiresIn: '1h' })
 
-            return token
 
+            return {
+                success: true,
+                msg: "Login bem-sucedido.",
+                data: {
+                    token,
+                    aluno: {
+                        id: aluno.id,
+                        nome: aluno.nome,
+                        ra: aluno.ra,
+                    },
+                },
+            };
         } catch (error) {
-            console.error(error);
-            throw new Error("Erro, contate o suporte!!!");
-
+            console.error("Erro no serviço de login:", error);
+            throw new Error("Erro interno no servidor. Contate o suporte.");
         }
+
     }
 
 }

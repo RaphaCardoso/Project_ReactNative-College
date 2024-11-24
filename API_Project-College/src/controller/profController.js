@@ -127,6 +127,9 @@ const profController = {
                 })
             }
 
+            console.log(prof);
+
+
             return res.status(200).json({
                 msg: "prof: ",
                 prof
@@ -151,19 +154,20 @@ const profController = {
                 })
             }
 
+            console.log(login);
+
+
             return res.status(200).json({
-                msg: "Login feito com sucesso!",
-                login
-            })
-
+                msg: login.msg,
+                data: login.data,
+            });
         } catch (error) {
+            console.error("Erro no controlador de login:", error);
 
-            console.error(error);
-
-            return res.status(400).json({
-                msg: "Erro, contato o suporte!"
-            })
-
+            // Retorno genérico para erros internos
+            return res.status(500).json({
+                msg: "Erro interno no servidor. Contate o suporte.",
+            });
         }
     }
 

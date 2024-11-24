@@ -1,13 +1,51 @@
-import React from 'react';
-import { View, ScrollView, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, ScrollView, StyleSheet, Text } from 'react-native';
 import Header from '../components/Header';
 import LibraryBanner from '../components/LibaryBanner';
 import CourseItem from '../components/CourseItem';
 import NavigationBar from '../components/NavigationBar';
+import axios from 'axios';
 
-export default function AlunoPage({ navigation }) {
+export default function AlunoPage({ route, navigation }) {
+  const { loginData } = route.params;
+  const [courses, setCourses] = useState([]); // Estado para armazenar os cursos
+  const name = loginData.data.aluno.nome;
+  const ra = loginData.data.aluno.ra;
+
+  useEffect(() => {
+    // Função para buscar os cursos da API
+    const fetchCourses = async () => {
+      try {
+        const response = await axios.get('http://10.0.2.2:3100/materia');
+
+        if (response.data && response.data.materias) {
+          const extractedCourses = [];
+          response.data.materias.forEach((materia) => {
+            extractedCourses.push({
+              profID: materia.profID || "Sem professor",
+              descricao: materia.descricao || "Sem Descrição",
+              materia: materia.materia || "Curso Sem Título",
+            });
+          });
+
+          extractedCourses.forEach((ids) => {
+            
+          })
+
+          setCourses(extractedCourses); // Atualizando o estado com os dados extraídos
+        } else {
+          console.error('Estrutura de dados inesperada:', response.data);
+        }
+      } catch (error) {
+        console.error('Erro ao buscar cursos:', error);
+      }
+    };
+
+    fetchCourses();
+  }, []); // Atualiza sempre que o RA mudar
+
   const handleNavigate = (screen) => {
-    navigation.navigate(screen); 
+    navigation.navigate(screen);
   };
 
   return (
@@ -15,21 +53,30 @@ export default function AlunoPage({ navigation }) {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Header
           greeting="QUE BOM QUE VOLTOU,"
-          username="JORGE"
-          profileImage={require('../assets/foto de perfil.png')}
+          username={name}
+          ra={ra}
+          profile="aluno"
         />
 
         <LibraryBanner
           title="Livros disponíveis"
           subtitle="na Biblioteca!"
-          image={require('../assets/biblioteca.png')}
           onPress={() => console.log("Ver livros clicado")}
         />
 
         <View style={styles.courseSection}>
-          <CourseItem name="Anderson Bosing" title="Programação Orientada a Objetos" />
-          <CourseItem name="Juliane Frabel" title="Banco de Dados" />
-          <CourseItem name="Paulo Santos" title="Equações Diferenciais e Métodos Numéricos" />
+          {courses.length > 0 ? (
+            courses.map((course, index) => (
+              <CourseItem
+                key={index} // Use o índice como chave (ou outro identificador único, como `_id`)
+                name={course.descricao} // Nome do professor
+                title={course.materia} // Nome do curso
+                prof={course.profID}
+              />
+            ))
+          ) : (
+            <Text style={styles.noCoursesText}>Nenhum curso encontrado.</Text>
+          )}
         </View>
       </ScrollView>
 
@@ -48,6 +95,11 @@ const styles = StyleSheet.create({
     paddingBottom: 70,
   },
   courseSection: {
+    marginVertical: 20,
+  },
+  noCoursesText: {
+    color: '#fff',
+    textAlign: 'center',
     marginVertical: 20,
   },
 });

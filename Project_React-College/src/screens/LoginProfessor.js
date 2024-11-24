@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, TouchableOpacity} from 'react-native';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import FormComponent from '../components/FormComponent';
-import Icon from 'react-native-vector-icons/MaterialIcons'; 
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
 const LoginProfessor = ({ navigation }) => {
   const [isSignUp, setIsSignUp] = useState(false);
 
   const handleToggleSignUp = () => setIsSignUp(!isSignUp);
 
-  const handleSubmit = () => {
-    navigation.navigate("ProfessorPage");
+  // Alterando handleSubmit para aceitar os dados de login
+  const handleSubmit = (loginData) => {
+    // Passando os dados de login para a tela ProfessorPage
+    navigation.navigate("ProfessorPage", { loginData });
   };
 
   const handleGoBack = () => {
@@ -19,25 +21,25 @@ const LoginProfessor = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
-        <Icon name="arrow-back" size={30} color="#fff" /> 
+        <Icon name="arrow-back" size={30} color="#fff" />
       </TouchableOpacity>
 
       <FormComponent
         isSignUp={isSignUp}
         onToggleSignUp={handleToggleSignUp}
         userType="professor"
-        onSubmit={handleSubmit} 
+        onSubmit={handleSubmit} // Passando handleSubmit como prop
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    backgroundColor: "#121212", 
-    padding: 20, 
-    justifyContent: "center" 
+  container: {
+    flex: 1,
+    backgroundColor: "#121212",
+    padding: 20,
+    justifyContent: "center"
   },
   backButton: {
     position: 'absolute',

@@ -83,7 +83,6 @@ const materiaController = {
         }
     },
 
-    // para tela detalhes professor -> form para enviar curso
     getOne: async (req, res) => {
         try {
 

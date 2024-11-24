@@ -1,6 +1,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet, Image, Dimensions } from "react-native";
 
+const imgTela = require('../assets/garoto_tela_incial.png')
+
 // Obter a largura da tela para ajustar os botões
 const { width } = Dimensions.get('window');
 
@@ -19,7 +21,7 @@ const EntryScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* Imagem da tela inicial */}
-      <Image source={require("../assets/garoto_tela_incial.png")} style={styles.image} />
+      {/* <Image source={imgTela} style={styles.image} /> */}
 
       <Text style={styles.greetingText}>Olá</Text>
       <Text style={styles.descriptionText}>Fazer Login como:</Text>

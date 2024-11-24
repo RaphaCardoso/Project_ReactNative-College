@@ -137,13 +137,24 @@ const profService = {
                 id: prof.id
             }, process.env.SECRETE, { expiresIn: '1h' })
 
-            return token
 
+            return {
+                success: true,
+                msg: "Login bem-sucedido.",
+                data: {
+                    token,
+                    prof: {
+                        id: prof.id,
+                        nome: prof.nome,
+                        matricula: prof.matricula,
+                    },
+                },
+            };
         } catch (error) {
-            console.error(error);
-            throw new Error("Erro, contate o suporte!!!");
-
+            console.error("Erro no serviço de login:", error);
+            throw new Error("Erro interno no servidor. Contate o suporte.");
         }
+
     }
 
 }

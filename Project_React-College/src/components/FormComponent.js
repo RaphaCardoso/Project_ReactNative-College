@@ -7,104 +7,65 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  // const handleSubmit = () => {
-  //   console.log("Username:", username);
-  //   console.log("Password:", password);
-  //   if (isSignUp) {
-  //     console.log("Confirm Password:", confirmPassword);
-  //     if (password !== confirmPassword) {
-  //       Alert.alert("Erro", "As senhas não coincidem!");
-  //       return;
-  //     }
-  //     onSubmit();
-  //   } else {
-  //     return;
-  //   }
-  // };
-
   const enviarCadastro = async () => {
-
     const novoCadastro = { nome: username, senha: password };
     try {
-
-      userType === "aluno" ? (
-        axios.post('http://10.0.2.2:3100/aluno', novoCadastro).then(resposta => {
-          if (resposta.status === 201) {
-            setUsername('');
-            setPassword('');
-            setConfirmPassword('');
-
-          } else {
-            Alert.alert('Erro. falha ao adicionar cadastro!');
-            return;
-          }
-        })
-
-      ) : (
-
-        axios.post('http://10.0.2.2:3100/prof', novoCadastro).then(resposta => {
-          if (resposta.status === 201) {
-            setUsername('');
-            setPassword('');
-            setConfirmPassword('');
-
-          } else {
-            Alert.alert('Erro. falha ao adicionar cadastro!');
-            return;
-          }
-        })
-      )
-
+      if (userType === "aluno") {
+        const resposta = await axios.post('http://10.0.2.2:3100/aluno', novoCadastro);
+        if (resposta.status === 201) {
+          setUsername('');
+          setPassword('');
+          setConfirmPassword('');
+          onSubmit();
+        } else {
+          Alert.alert('Erro', 'Falha ao adicionar cadastro!');
+        }
+      } else {
+        const resposta = await axios.post('http://10.0.2.2:3100/prof', novoCadastro);
+        if (resposta.status === 201) {
+          setUsername('');
+          setPassword('');
+          setConfirmPassword('');
+          Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
+        } else {
+          Alert.alert('Erro', 'Falha ao adicionar cadastro!');
+        }
+      }
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
-      console.error(erro);
+      console.error(error);
     }
-
-
-  }
-
-  const enviarLogin = async () => {
-    const novoCadastroA = { ra: username, senha: password };
-
-    const novoCadastroP = { matricula: username, senha: password };
-
-    try {
-
-      userType === "aluno" ? (
-
-        axios.post('http://10.0.2.2:3100/aluno/login', novoCadastroA).then(resposta => {
-          if (resposta.status === 200) {
-            setUsername('');
-            setPassword('');
-            setConfirmPassword('');
-
-          } else {
-            Alert.alert('Erro. falha ao adicionar cadastro!');
-            return;
-          }
-        })
-
-      ) : (
-        axios.post('http://10.0.2.2:3100/prof/login', novoCadastroP).then(resposta => {
-          if (resposta.status === 200) {
-            setUsername('');
-            setPassword('');
-            setConfirmPassword('');
-
-          } else {
-            Alert.alert('Erro. falha ao adicionar cadastro!');
-            return;
-          }
-        })
-      )
-
-    } catch (error) {
-      Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
-      console.error(erro);
-    }
-
   };
 
+  const enviarLogin = async () => {
+    const loginData = userType === "aluno" ?
+      { ra: username, senha: password } :
+      { matricula: username, senha: password };
+
+    try {
+      const resposta = await axios.post(
+        userType === "aluno" ? 'http://10.0.2.2:3100/aluno/login' : 'http://10.0.2.2:3100/prof/login',
+        loginData
+      );
+
+      console.log("Resposta da API:", resposta.data);
+
+      if (resposta.data) {
+        setUsername('');
+        setPassword('');
+        setConfirmPassword('');
+
+        // Passando a resposta do login para a tela seguinte via onSubmit
+        onSubmit(resposta.data);
+      } else {
+
+        Alert.alert('Erro', resposta.data.msg || 'Falha ao tentar login!');
+      }
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
+      console.error(error);
+    }
+  };
 
   return (
     <View>
@@ -123,8 +84,7 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
           value={username}
           onChangeText={setUsername}
         />
-      )
-      }
+      )}
 
       <TextInput
         placeholder="Password"
