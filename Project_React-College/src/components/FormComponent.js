@@ -41,6 +41,9 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
       { ra: username, senha: password } :
       { matricula: username, senha: password };
 
+      console.log(loginData);
+      
+
     try {
       const resposta = await axios.post(
         userType === "aluno" ? 'http://10.0.2.2:3100/aluno/login' : 'http://10.0.2.2:3100/prof/login',
