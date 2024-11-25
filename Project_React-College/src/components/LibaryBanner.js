@@ -8,7 +8,7 @@ export default function LibraryBanner({ title, subtitle, image, onPress }) {
     <View style={styles.libraryBanner}>
       <Text style={styles.libraryText}>{title}</Text>
       <Text style={styles.librarySubtitle}>{subtitle}</Text>
-      {/* <Image source={image} style={styles.libraryImage} /> */}
+       <Image source={image} style={styles.libraryImage} />
       <TouchableOpacity style={styles.libraryButton} onPress={onPress}>
         <Text style={styles.libraryButtonText}>veja aqui ➔</Text>
       </TouchableOpacity>

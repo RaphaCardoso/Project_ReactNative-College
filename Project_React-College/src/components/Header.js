@@ -18,7 +18,7 @@ export default function Header({ greeting, username, profileImage, ra, profile }
         <Text style={styles.username}>{username}</Text>
         <Text style={styles.infoText}>{msg + ra}</Text>
       </View>
-      {/* <Image style={styles.profileImage} source={profileImage} /> */}
+      <Image style={styles.profileImage} source={profileImage} />
     </View>
   );
 }

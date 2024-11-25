@@ -1,8 +1,14 @@
 const mongoose = require('mongoose');
-
+require('dotenv').config();
 const connectDB = async () => {
     try {
-        const mongoURI = "mongodb://localhost:27017/react_college";
+
+        const HOST_DB = process.env.HOST_DB;
+
+        const PASS_DB = process.env.DB_PASS;
+
+
+        const mongoURI = `mongodb+srv://${HOST_DB}:${PASS_DB}@database-college.fep21.mongodb.net/?retryWrites=true&w=majority&appName=Database-College`
 
         await mongoose.connect(mongoURI);
 
