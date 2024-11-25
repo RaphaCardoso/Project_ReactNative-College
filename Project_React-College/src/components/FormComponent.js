@@ -33,7 +33,6 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
       }
     } catch (error) {
       Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
-      console.error(error);
     }
   };
 
@@ -62,8 +61,8 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
         Alert.alert('Erro', resposta.data.msg || 'Falha ao tentar login!');
       }
     } catch (error) {
-      Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
       console.error(error);
+      Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
     }
   };
 

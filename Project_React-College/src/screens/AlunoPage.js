@@ -27,11 +27,6 @@ export default function AlunoPage({ route, navigation }) {
               materia: materia.materia || "Curso Sem Título",
             });
           });
-
-          extractedCourses.forEach((ids) => {
-            
-          })
-
           setCourses(extractedCourses); // Atualizando o estado com os dados extraídos
         } else {
           console.error('Estrutura de dados inesperada:', response.data);
