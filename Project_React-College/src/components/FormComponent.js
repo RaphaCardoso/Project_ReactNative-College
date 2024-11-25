@@ -7,66 +7,84 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = () => {
-    console.log("Username:", username);
-    console.log("Password:", password);
-    if (isSignUp) {
-      console.log("Confirm Password:", confirmPassword);
-      if (password !== confirmPassword) {
-        Alert.alert("Erro", "As senhas não coincidem!");
-        return;
+  const enviarCadastro = async () => {
+    const novoCadastro = { nome: username, senha: password };
+    try {
+      if (userType === "aluno") {
+        const resposta = await axios.post('http://10.0.2.2:3100/aluno', novoCadastro);
+        if (resposta.status === 201) {
+          setUsername('');
+          setPassword('');
+          setConfirmPassword('');
+          onSubmit();
+        } else {
+          Alert.alert('Erro', 'Falha ao adicionar cadastro!');
+        }
+      } else {
+        const resposta = await axios.post('http://10.0.2.2:3100/prof', novoCadastro);
+        if (resposta.status === 201) {
+          setUsername('');
+          setPassword('');
+          setConfirmPassword('');
+          Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
+        } else {
+          Alert.alert('Erro', 'Falha ao adicionar cadastro!');
+        }
       }
-      Alert.alert("Sucesso", "Cadastro realizado com sucesso!");
-      onSubmit();
-    } else {
-      return;
+    } catch (error) {
+      Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
     }
   };
 
-  const enviarCadastro = async () => {
-
-    const novoCadastro = { nome: username, senha: password };
-
-    axios.post('http://10.0.2.2:3100/aluno', novoCadastro).then(resposta => {
-      if (resposta.status === 201) {
-        setUsername = '';
-        setPassword = '';
-        setConfirmPassword = '';
-
-      } else {
-        Alert.alert('Erro. falha ao adicionar cadastro!');
-        return;
-      }
-    });
-
-  }
-
   const enviarLogin = async () => {
-    const novoCadastro = { ra: username, senha: password };
+    const loginData = userType === "aluno" ?
+      { ra: username, senha: password } :
+      { matricula: username, senha: password };
 
-    axios.post('http://localhost:3100/aluno/login', novoCadastro).then(resposta => {
-      if (resposta.status === 201) {
-        setUsername = '';
-        setPassword = '';
-        setConfirmPassword = '';
+    try {
+      const resposta = await axios.post(
+        userType === "aluno" ? 'http://10.0.2.2:3100/aluno/login' : 'http://10.0.2.2:3100/prof/login',
+        loginData
+      );
 
+      console.log("Resposta da API:", resposta.data);
+
+      if (resposta.data) {
+        setUsername('');
+        setPassword('');
+        setConfirmPassword('');
+
+        // Passando a resposta do login para a tela seguinte via onSubmit
+        onSubmit(resposta.data);
       } else {
-        Alert.alert('Erro. falha ao adicionar cadastro!');
-        return;
-      }
-    });
-  };
 
+        Alert.alert('Erro', resposta.data.msg || 'Falha ao tentar login!');
+      }
+    } catch (error) {
+      console.error(error);
+      Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
+    }
+  };
 
   return (
     <View>
-      <Text style={styles.title}>{isSignUp ? "Login" : "Login"}</Text>
-      <TextInput
-        placeholder={userType === "aluno" ? "R.A" : "Matrícula"}
-        style={styles.input}
-        value={username}
-        onChangeText={setUsername}
-      />
+      <Text style={styles.title}>{isSignUp ? "Cadastro" : "Login"}</Text>
+      {isSignUp ? (
+        <TextInput
+          placeholder="Nome"
+          style={styles.input}
+          value={username}
+          onChangeText={setUsername}
+        />
+      ) : (
+        <TextInput
+          placeholder={userType === "aluno" ? "R.A" : "Matrícula"}
+          style={styles.input}
+          value={username}
+          onChangeText={setUsername}
+        />
+      )}
+
       <TextInput
         placeholder="Password"
         style={styles.input}
@@ -86,7 +104,7 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
       )}
 
       <TouchableOpacity style={styles.button} onPress={isSignUp ? enviarCadastro : enviarLogin}>
-        <Text style={styles.buttonText}>{isSignUp ? "Login" : "Login"}</Text>
+        <Text style={styles.buttonText}>{isSignUp ? "Cadastro" : "Login"}</Text>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={onToggleSignUp}>

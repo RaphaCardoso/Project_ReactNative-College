@@ -1,14 +1,24 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet } from 'react-native';
 
-export default function Header({ greeting, username, profileImage }) {
+export default function Header({ greeting, username, profileImage, ra, profile }) {
+
+  let msg
+
+  if (profile === "aluno") {
+    msg = "RA: ";
+  } else {
+    msg = "Matricula: "
+  }
+
   return (
     <View style={styles.header}>
       <View style={styles.greetingContainer}>
         <Text style={styles.greeting}>{greeting}</Text>
         <Text style={styles.username}>{username}</Text>
+        <Text style={styles.infoText}>{msg + ra}</Text>
       </View>
-      <Image style={styles.profileImage} source={profileImage} />
+      {/* <Image style={styles.profileImage} source={profileImage} /> */}
     </View>
   );
 }
@@ -38,5 +48,10 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 110,
     height: 110,
+  },
+  infoText: {
+    color: '#fff',
+    fontSize: 16,
+    marginBottom: 10,
   },
 });

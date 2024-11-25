@@ -2,11 +2,13 @@ import React from 'react';
 import { View, Text, Image, TouchableOpacity, StyleSheet } from 'react-native';
 
 export default function LibraryBanner({ title, subtitle, image, onPress }) {
+  console.log(image);
+
   return (
     <View style={styles.libraryBanner}>
       <Text style={styles.libraryText}>{title}</Text>
       <Text style={styles.librarySubtitle}>{subtitle}</Text>
-      <Image source={image} style={styles.libraryImage} />
+      {/* <Image source={image} style={styles.libraryImage} /> */}
       <TouchableOpacity style={styles.libraryButton} onPress={onPress}>
         <Text style={styles.libraryButtonText}>veja aqui ➔</Text>
       </TouchableOpacity>
