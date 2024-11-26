@@ -8,6 +8,7 @@ import axios from 'axios';
 
 export default function AlunoPage({ route, navigation }) {
   const { loginData } = route.params;
+
   const [courses, setCourses] = useState([]); // Estado para armazenar os cursos
   const name = loginData.data.aluno.nome;
   const ra = loginData.data.aluno.ra;

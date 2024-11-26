@@ -8,6 +8,7 @@ import axios from 'axios';
 
 export default function ProfessorPage({ route, navigation }) {
   const { loginData } = route.params;
+
   const [courses, setCourses] = useState([]); // Estado para armazenar os cursos
   const nome = "PROF " + loginData.data.prof.nome;
   const matricula = loginData.data.prof.matricula;
@@ -51,11 +52,11 @@ export default function ProfessorPage({ route, navigation }) {
           profile="professor"
         />
 
-        <LibraryBanner
+        {/* <LibraryBanner
           title="Livros e Materiais disponíveis"
           subtitle="para seus alunos!"
           onPress={() => console.log("Ver livros clicado")}
-        />
+        /> */}
 
         <View style={styles.courseSection}>
           {courses.length > 0 ? (

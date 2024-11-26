@@ -21,7 +21,7 @@ const EntryScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       {/* Imagem da tela inicial */}
-      {/* <Image source={imgTela} style={styles.image} /> */}
+      <Image source={imgTela} style={styles.image} />
 
       <Text style={styles.greetingText}>Olá</Text>
       <Text style={styles.descriptionText}>Fazer Login como:</Text>

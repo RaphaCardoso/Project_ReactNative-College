@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; 
+import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import FormComponent from '../components/FormComponent';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -8,8 +8,9 @@ const LoginAluno = ({ navigation }) => {
 
   const handleToggleSignUp = () => setIsSignUp(!isSignUp);
 
-  const handleSubmit = () => {
-    navigation.navigate("AlunoPage");
+  const handleSubmit = (loginData) => {
+    // Passando os dados de login para a tela AlunoPage
+    navigation.navigate("AlunoPage", { loginData });
   };
 
   const handleGoBack = () => {
@@ -18,26 +19,26 @@ const LoginAluno = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-    <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
-      <Icon name="arrow-back" size={30} color="#fff" />
-    </TouchableOpacity>
+      <TouchableOpacity onPress={handleGoBack} style={styles.backButton}>
+        <Icon name="arrow-back" size={30} color="#fff" />
+      </TouchableOpacity>
 
       <FormComponent
         isSignUp={isSignUp}
         onToggleSignUp={handleToggleSignUp}
         userType="aluno"
-        onSubmit={handleSubmit} 
+        onSubmit={handleSubmit}
       />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { 
-    flex: 1, 
-    backgroundColor: "#121212", 
-    padding: 20, 
-    justifyContent: "center" 
+  container: {
+    flex: 1,
+    backgroundColor: "#121212",
+    padding: 20,
+    justifyContent: "center"
   },
   backButton: {
     position: 'absolute',
