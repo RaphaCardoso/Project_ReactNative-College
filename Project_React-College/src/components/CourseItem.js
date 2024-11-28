@@ -12,7 +12,7 @@ export default function CourseItem({ name, title, prof }) {
   useEffect(() => {
     const fetchProfessorName = async () => {
       try {
-        const response = await axios.get(`http://10.0.2.2:3100/prof/${prof}`);
+        const response = await axios.get(`http://192.168.15.17:3100/prof/${prof}`);
 
         if (response && response.data && response.data.prof) {
           console.log(response.data.prof.nome);

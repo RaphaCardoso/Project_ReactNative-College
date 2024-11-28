@@ -14,7 +14,7 @@ app.use("/", router);
 
 const port = process.env.PORT || 3100;
 
-app.listen(port, async () => {
+app.listen(port, '0.0.0.0', async () => {
     try {
         await database();
     } catch (error) {

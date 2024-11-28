@@ -11,7 +11,7 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
     const novoCadastro = { nome: username, senha: password };
     try {
       if (userType === "aluno") {
-        const resposta = await axios.post('http://10.0.2.2:3100/aluno', novoCadastro);
+        const resposta = await axios.post('http://192.168.15.17:3100/aluno', novoCadastro);
         if (resposta.status === 201) {
           setUsername('');
           setPassword('');
@@ -21,7 +21,7 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
           Alert.alert('Erro', 'Falha ao adicionar cadastro!');
         }
       } else {
-        const resposta = await axios.post('http://10.0.2.2:3100/prof', novoCadastro);
+        const resposta = await axios.post('http://192.168.15.17:3100/prof', novoCadastro);
         if (resposta.status === 201) {
           setUsername('');
           setPassword('');
@@ -32,6 +32,8 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
         }
       }
     } catch (error) {
+      console.error(error);
+
       Alert.alert('Erro', 'Não foi possível conectar ao servidor.');
     }
   };
@@ -43,11 +45,9 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
 
     try {
       const resposta = await axios.post(
-        userType === "aluno" ? 'http://10.0.2.2:3100/aluno/login' : 'http://10.0.2.2:3100/prof/login',
+        userType === "aluno" ? 'http://192.168.15.17:3100/aluno/login' : 'http://192.168.15.17:3100/prof/login',
         loginData
       );
-
-      console.log("Resposta da API:", resposta.data);
 
       if (resposta.data) {
         setUsername('');

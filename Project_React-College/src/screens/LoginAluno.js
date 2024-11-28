@@ -2,15 +2,39 @@ import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import FormComponent from '../components/FormComponent';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LoginAluno = ({ navigation }) => {
   const [isSignUp, setIsSignUp] = useState(false);
 
   const handleToggleSignUp = () => setIsSignUp(!isSignUp);
 
-  const handleSubmit = (loginData) => {
-    // Passando os dados de login para a tela AlunoPage
-    navigation.navigate("AlunoPage", { loginData });
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value);
+
+      await AsyncStorage.setItem('@College:login', jsonValue);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+
+  const handleSubmit = async (loginData) => {
+
+    const nome = loginData.data.aluno.nome;
+
+    const ra = loginData.data.aluno.ra;
+
+
+    const data = {
+      nome,
+      ra
+    };
+
+    await storeData(data);
+
+    navigation.navigate("AlunoPage");
   };
 
   const handleGoBack = () => {

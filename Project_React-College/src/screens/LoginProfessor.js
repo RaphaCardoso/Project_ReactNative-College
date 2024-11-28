@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, TouchableOpacity} from 'react-native';
 import FormComponent from '../components/FormComponent';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Icon from 'react-native-vector-icons/MaterialIcons'; 
 
 const LoginProfessor = ({ navigation }) => {

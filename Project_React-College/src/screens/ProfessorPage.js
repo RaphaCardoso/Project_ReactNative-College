@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import LibraryBanner from '../components/LibaryBanner';
 import CourseItem from '../components/CourseItem';
 import NavigationBar from '../components/NavigationBar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 export default function ProfessorPage({ route, navigation }) {
@@ -19,7 +20,7 @@ export default function ProfessorPage({ route, navigation }) {
     // Função para buscar os dados da API
     const fetchCourses = async () => {
       try {
-        const response = await axios.get('http://10.0.2.2:3100/materia');
+        const response = await axios.get('http://192.168.15.17:3100/materia');
 
         if (response.data && response.data.materias) {
           const extractedCourses = [];
