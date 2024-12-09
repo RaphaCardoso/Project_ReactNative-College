@@ -5,7 +5,7 @@ import LibraryBanner from '../components/LibaryBanner';
 import CourseItem from '../components/CourseItem';
 import NavigationBar from '../components/NavigationBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+import axios from 'axios'
 
 export default function AlunoPage({ navigation }) {
   const [name, setName] = useState(''); // Estado para armazenar o nome

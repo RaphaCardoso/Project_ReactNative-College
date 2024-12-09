@@ -1,10 +1,41 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Calendar } from "react-native-calendars";
 import NavigationBar from '../components/NavigationBar'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const CalendarScreen = ({ navigation }) => {
   const [selectedDate, setSelectedDate] = useState(null);
+  const [userType, setUsertype] = useState('');
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@College:login');
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    const getyuserType = async () => {
+
+
+      try {
+        const storage = await getData();
+
+        if (storage) {
+          setUsertype(storage.userType || '');
+        }
+
+      } catch (error) {
+        console.error('Erro ao buscar cursos:', error);
+      }
+
+    }
+
+    getyuserType();
+  }, []);
 
   // Eventos marcados no calendário
   const events = {
@@ -59,11 +90,11 @@ const CalendarScreen = ({ navigation }) => {
         <Text style={styles.eventTitle}>
           {selectedDate
             ? `Eventos em ${new Date(selectedDate).toLocaleDateString("pt-BR", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}`
+              weekday: "long",
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}`
             : "Selecione uma data para ver os eventos"}
         </Text>
         <FlatList
@@ -89,6 +120,7 @@ const CalendarScreen = ({ navigation }) => {
       <NavigationBar
         onNavigate={(route) => navigation.navigate(route)} // Navega para a rota escolhida
         activeRoute="Calendario" // Define o botão ativo como Calendário
+        userType={userType}
       />
     </View>
   );

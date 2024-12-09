@@ -1,8 +1,39 @@
-import React from 'react'; 
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet, ScrollView, Image } from 'react-native'; // Adicionei o TextInput aqui
-import NavigationBar from '../components/NavigationBar'; 
+import NavigationBar from '../components/NavigationBar';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const LibraryPage = ({ navigation }) => {
+
+  const [userType, setUsertype] = useState('');
+
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@College:login');
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  useEffect(() => {
+    const getyuserType = async () => {
+
+      try {
+        const storage = await getData();
+
+        if (storage) {
+          setUsertype(storage.userType || '');
+        }
+
+      } catch (error) {
+        console.error('Erro ao buscar cursos:', error);
+      }
+
+    }
+
+    getyuserType();
+  }, []);
 
   const handleNavigation = (route) => {
     navigation.navigate(route);
@@ -10,7 +41,7 @@ const LibraryPage = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      
+
       <Text style={styles.header}>BIBLIOTECA ONLINE</Text>
 
       {/* Campo de pesquisa */}
@@ -26,19 +57,19 @@ const LibraryPage = ({ navigation }) => {
         <View style={styles.bookCategory}>
           <Text style={styles.categoryTitle}>MATERIALIZAÇÃO</Text>
           <View style={styles.bookList}>
-          
+
             <View style={styles.bookItem}>
-              <Image 
-                source={require('../assets/book1.png')} 
-                style={styles.bookImage} 
+              <Image
+                source={require('../assets/book1.png')}
+                style={styles.bookImage}
               />
               <Text style={styles.bookTitle}>Análise e Projeto de Sistemas</Text>
               <Text style={styles.bookAuthor}>William Pereira Alves</Text>
             </View>
             <View style={styles.bookItem}>
-              <Image 
+              <Image
                 source={require('../assets/book2.png')}
-                style={styles.bookImage} 
+                style={styles.bookImage}
               />
               <Text style={styles.bookTitle}>Desenvolvimento de Software</Text>
               <Text style={styles.bookAuthor}>Instituto Federal</Text>
@@ -50,17 +81,17 @@ const LibraryPage = ({ navigation }) => {
           <Text style={styles.categoryTitle}>TECNOLOGIA</Text>
           <View style={styles.bookList}>
             <View style={styles.bookItem}>
-              <Image 
+              <Image
                 source={require('../assets/book3.png')}
-                style={styles.bookImage} 
+                style={styles.bookImage}
               />
               <Text style={styles.bookTitle}>Código Limpo</Text>
               <Text style={styles.bookAuthor}>Robert C. Martin</Text>
             </View>
             <View style={styles.bookItem}>
-              <Image 
-                source={require('../assets/book4.png')} 
-                style={styles.bookImage} 
+              <Image
+                source={require('../assets/book4.png')}
+                style={styles.bookImage}
               />
               <Text style={styles.bookTitle}>Java - Como Programar</Text>
               <Text style={styles.bookAuthor}>Deitel & Deitel</Text>
@@ -69,10 +100,10 @@ const LibraryPage = ({ navigation }) => {
         </View>
       </ScrollView>
 
-      <NavigationBar 
-        onNavigate={handleNavigation} 
-        activeRoute="Library" 
-        userType="aluno"
+      <NavigationBar
+        onNavigate={handleNavigation}
+        activeRoute="Library"
+        userType={userType}
       />
     </View>
   );

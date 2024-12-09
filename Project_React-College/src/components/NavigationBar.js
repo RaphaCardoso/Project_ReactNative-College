@@ -3,24 +3,24 @@ import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function NavigationBar({ onNavigate, activeRoute, userType }) {
-  
+
   const homeRoute = userType === 'professor' ? 'ProfessorPage' : 'AlunoPage';
 
   return (
     <View style={styles.navigationBar}>
       <TouchableOpacity onPress={() => onNavigate(homeRoute)}>
-        <Icon 
-          name="home" 
-          size={20} 
-          color={activeRoute === homeRoute ? '#E53935' : '#FFFFFF'} 
+        <Icon
+          name="home"
+          size={20}
+          color={activeRoute === homeRoute ? '#E53935' : '#FFFFFF'}
         />
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => onNavigate('Library')}>
-        <Icon 
-          name="menu-book"  
-          size={20} 
-          color={activeRoute === 'Library' ? '#E53935' : '#FFFFFF'} 
+        <Icon
+          name="menu-book"
+          size={20}
+          color={activeRoute === 'Library' ? '#E53935' : '#FFFFFF'}
         />
       </TouchableOpacity>
 
@@ -29,18 +29,18 @@ export default function NavigationBar({ onNavigate, activeRoute, userType }) {
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => onNavigate('Calendario')}>
-        <Icon 
-          name="event" 
-          size={20} 
-          color={activeRoute === 'Calendario' ? '#E53935' : '#FFFFFF'} 
+        <Icon
+          name="event"
+          size={20}
+          color={activeRoute === 'Calendario' ? '#E53935' : '#FFFFFF'}
         />
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => onNavigate('Menu')}>
-        <Icon 
-          name="menu" 
-          size={20} 
-          color={activeRoute === 'Menu' ? '#E53935' : '#FFFFFF'} 
+        <Icon
+          name="menu"
+          size={20}
+          color={activeRoute === 'Menu' ? '#E53935' : '#FFFFFF'}
         />
       </TouchableOpacity>
 

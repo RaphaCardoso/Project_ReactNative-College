@@ -7,19 +7,33 @@ import NavigationBar from '../components/NavigationBar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-export default function ProfessorPage({ route, navigation }) {
-  const { loginData } = route.params;
-
+export default function ProfessorPage({ navigation }) {
+  const [name, setName] = useState(''); // Estado para armazenar o nome
+  const [matricula, setmatricula] = useState(''); // Estado para armazenar o RA
+  const [userType, setUsertype] = useState('');
   const [courses, setCourses] = useState([]); // Estado para armazenar os cursos
-  const nome = "PROF " + loginData.data.prof.nome;
-  const matricula = loginData.data.prof.matricula;
 
-  console.log(matricula);
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@College:login');
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      console.error(e);
+    }
+  };
 
   useEffect(() => {
     // Função para buscar os dados da API
     const fetchCourses = async () => {
       try {
+        const storage = await getData();
+
+        if (storage) {
+          // Atualiza os estados com os dados do AsyncStorage
+          setName(storage.nome || '');
+          setmatricula(storage.matricula || '');
+          setUsertype(storage.userType || '');
+        }
         const response = await axios.get('http://192.168.15.17:3100/materia');
 
         if (response.data && response.data.materias) {
@@ -48,16 +62,16 @@ export default function ProfessorPage({ route, navigation }) {
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <Header
           greeting="BEM-VINDO DE VOLTA,"
-          username={nome}
+          username={name}
           ra={matricula}
-          profile="professor"
+          profile={userType}
         />
 
-        {/* <LibraryBanner
+        <LibraryBanner
           title="Livros e Materiais disponíveis"
           subtitle="para seus alunos!"
           onPress={() => console.log("Ver livros clicado")}
-        /> */}
+        />
 
         <View style={styles.courseSection}>
           {courses.length > 0 ? (
@@ -75,7 +89,7 @@ export default function ProfessorPage({ route, navigation }) {
         </View>
       </ScrollView>
 
-      <NavigationBar onNavigate={(screen) => navigation.navigate(screen)} activeRoute="Home" />
+      <NavigationBar onNavigate={(screen) => navigation.navigate(screen)} activeRoute="Home" userType={userType} />
     </View>
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
+import { View, TextInput, Text, TouchableOpacity, StyleSheet, Alert, ToastAndroid } from "react-native";
 import axios from 'axios';
 
 const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
@@ -16,7 +16,7 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
           setUsername('');
           setPassword('');
           setConfirmPassword('');
-          onSubmit();
+          ToastAndroid.show('Cadastro Realizado com Sucesso!', ToastAndroid.SHORT)
         } else {
           Alert.alert('Erro', 'Falha ao adicionar cadastro!');
         }
@@ -26,7 +26,8 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
           setUsername('');
           setPassword('');
           setConfirmPassword('');
-          Alert.alert('Sucesso', 'Cadastro realizado com sucesso!');
+          ToastAndroid.show('Cadastro Realizado com Sucesso!', ToastAndroid.SHORT)
+
         } else {
           Alert.alert('Erro', 'Falha ao adicionar cadastro!');
         }
@@ -43,6 +44,7 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
       { ra: username, senha: password } :
       { matricula: username, senha: password };
 
+
     try {
       const resposta = await axios.post(
         userType === "aluno" ? 'http://192.168.15.17:3100/aluno/login' : 'http://192.168.15.17:3100/prof/login',
@@ -53,6 +55,7 @@ const FormComponent = ({ isSignUp, onToggleSignUp, userType, onSubmit }) => {
         setUsername('');
         setPassword('');
         setConfirmPassword('');
+
 
         // Passando a resposta do login para a tela seguinte via onSubmit
         onSubmit(resposta.data);

@@ -7,8 +7,10 @@ export default function Header({ greeting, username, profileImage, ra, profile }
 
   if (profile === "aluno") {
     msg = "RA: ";
-  } else {
+  } else if (profile === "professor") {
     msg = "Matricula: "
+  } else {
+    msg = "Erro ao atualizar!"
   }
 
   return (
