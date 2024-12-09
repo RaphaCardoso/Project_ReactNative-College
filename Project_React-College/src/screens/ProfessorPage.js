@@ -70,7 +70,7 @@ export default function ProfessorPage({ navigation }) {
         <LibraryBanner
           title="Livros e Materiais disponíveis"
           subtitle="para seus alunos!"
-          onPress={() => console.log("Ver livros clicado")}
+          onPress={() => console.log("Ver livros clicando")}
         />
 
         <View style={styles.courseSection}>

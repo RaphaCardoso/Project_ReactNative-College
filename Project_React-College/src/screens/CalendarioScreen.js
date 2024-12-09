@@ -40,6 +40,11 @@ const CalendarScreen = ({ navigation }) => {
   // Eventos marcados no calendário
   const events = {
     "2024-11-25": [{ title: "Aula Magna", description: "Evento especial" }],
+    "2024-12-04": [{ title: "Curso Java", description: "Aula 1" }],
+    "2024-12-06": [{ title: "Curso Java", description: "Aula 2" }],
+    "2024-12-08": [{ title: "Curso java", description: "Aula 3" }],
+    "2024-12-11": [{ title: "Curso Java", description: "Aula 4" }],
+    "2024-12-13": [{ title: "Curso Java", description: "Aula 5" }],
     "2024-11-28": [{ title: "Reunião de Pais", description: "Auditório A" }],
   };
 

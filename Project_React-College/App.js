@@ -8,7 +8,7 @@ import LoginProfessor from "./src/screens/LoginProfessor";
 import AlunoPage from "./src/screens/AlunoPage";
 import ProfessorPage from "./src/screens/ProfessorPage";
 import CalendarioScreen from "./src/screens/CalendarioScreen";
-import LibraryPage from "./src/screens/LibraryPage";  
+import LibraryPage from "./src/screens/LibraryPage";
 
 const Stack = createStackNavigator();
 
@@ -46,11 +46,10 @@ const AppNavigator = () => {
           component={CalendarioScreen}
           options={{ headerShown: false }}
         />
-
-        <Stack.Screen 
-          name="Library" 
-          component={LibraryPage} 
-          options={{ headerShown: false }} 
+        <Stack.Screen
+          name="Library"
+          component={LibraryPage}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

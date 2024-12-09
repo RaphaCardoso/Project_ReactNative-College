@@ -6,6 +6,7 @@ export default function NavigationBar({ onNavigate, activeRoute, userType }) {
 
   const homeRoute = userType === 'professor' ? 'ProfessorPage' : 'AlunoPage';
 
+
   return (
     <View style={styles.navigationBar}>
       <TouchableOpacity onPress={() => onNavigate(homeRoute)}>
